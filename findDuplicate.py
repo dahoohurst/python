@@ -82,6 +82,6 @@ if __name__ == "__main__":
         else:
             print('The folder does not exist!')
         print('Duplicate file list is:\n'+'\n'.join(dup_list))
-        fw.write('The current folder: '+currentAbsPath+'\n')
+        fw.write('The current folder: '+sys.argv[1]+'\n')
         fw.write(f+'\n' for f in dup_list)
     fw.close()
