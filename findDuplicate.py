@@ -70,7 +70,7 @@ if __name__ == "__main__":
         listAllFiles(currentAbsPath)
         print('Duplicate file list is:\n'+'\n'.join(dup_list))
         fw.write('The current folder: '+currentAbsPath+'\n')
-        fw.write(f+'\n' for f in dup_list)
+        fw.write('\n'.join(dup_list))
     elif args > 2:
         print('Error: too many arguments.')
         print('Usage: '+sys.argv[0]+' [The relative/absolute path of a folder]')
@@ -83,5 +83,5 @@ if __name__ == "__main__":
             print('The folder does not exist!')
         print('Duplicate file list is:\n'+'\n'.join(dup_list))
         fw.write('The current folder: '+sys.argv[1]+'\n')
-        fw.write(f+'\n' for f in dup_list)
+        fw.write('\n'.join(dup_list))
     fw.close()
