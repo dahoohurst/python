@@ -8,6 +8,8 @@ Used to find duplicate files in a folder on Linux
 import os
 from collections import Counter
 
+dup_list = []
+
 def listfolder(absPath):
     '''List all folders in one folder with an absolute path'''
     dirs = [d for d in os.listdir(absPath) if os.path.isdir(absPath+'/'+d)]
@@ -38,6 +40,8 @@ def listAllFiles(absFolder, temp_rank = 0):
             files = findDuplicate(filelist)
             if files:
                 print(' '*temp_rank*4+'Duplicate Files: '+', '.join(listfiles(absFolder)))
+                global dup_list
+                dup_list.extend([absFolder+'/'+f for f in filelist])
             print('')
         
     else:
@@ -68,9 +72,4 @@ if __name__ == "__main__":
             listAllFiles(sys.argv[1])
         else:
             print('The folder does not exist!')
-
-
-#listAllFiles('C:/Users/Dahoo/Projects/test')
-#print(listfiles('.'))
-#print(listfolder('.'))
-#listfolder('C:\\Users\\Dahoo\\python\\xxx')
+        print('Duplicate file list is:\n'+'\n'.join(dup_list))
