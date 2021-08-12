@@ -83,5 +83,6 @@ if __name__ == "__main__":
             print('The folder does not exist!')
         print('Duplicate file list is:\n'+'\n'.join(dup_list))
         fw.write('The current folder: '+sys.argv[1]+'\n')
+        fw.write('Duplicate files are:\n')
         fw.write('\n'.join(dup_list))
     fw.close()
