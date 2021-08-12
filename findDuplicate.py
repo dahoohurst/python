@@ -1,4 +1,5 @@
- # -*- coding: utf-8 -*-
+#!/usr/bin/python3 
+# -*- coding: utf-8 -*-
 """
 Created on Thu Aug  5 14:24:01 2021
 Used to find duplicate files in a folder on Linux
