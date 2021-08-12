@@ -1,7 +1,7 @@
  # -*- coding: utf-8 -*-
 """
 Created on Thu Aug  5 14:24:01 2021
-
+Used to find duplicate files in a folder on Linux
 @author: Dahoo
 """
 
@@ -25,26 +25,36 @@ def findDuplicate(filelist):
     print(duplicate_list)
 
 def listAllFiles(absFolder, temp_rank = 0):
+    '''Process the folder recursively'''
     dirs = listfolder(absFolder)
-    print(' '*temp_rank*4+"(rank "+str(temp_rank)+") The folder: " + absFolder)
+    print(' '*temp_rank*4+"(Rank "+str(temp_rank)+"): " + absFolder)
     if not dirs:       # means this is a bottom folder
-        print(' '*temp_rank*4+"This folder does not have any subfolders. ")
-        print(' '*temp_rank*4+"So the file list is: " + ', '.join(listfiles(absFolder))+'.')
-        print(' '*temp_rank*4, end='')
-        findDuplicate(listfiles(absFolder))
+        #print(' '*temp_rank*4+"This folder does not have any subfolders. ")
+        print(' '*temp_rank*4+"So the file list is: " + ', '.join(listfiles(absFolder)))
+        files = findDuplicate(listfiles(absFolder))
+        if files:
+            print(' '*temp_rank*4+'Duplicate Files: '+', '.join(listfiles(absFolder)))
+        else:
+            print('')
+        
     else:
-        print(' '*temp_rank*4+"This folder has files: " + ', '.join(listfiles(absFolder))+'.')
-        print(' '*temp_rank*4+"This folder has subfolders: ["+'],['.join(dirs)+'].')
+        print(' '*temp_rank*4+"This folder has files: " + ', '.join(listfiles(absFolder)))
+        files = findDuplicate(listfiles(absFolder))
+        if files:
+            print(' '*temp_rank*4+'Duplicate Files: '+', '.join(listfiles(absFolder)))
+        else:
+            print('')
+            
+        print(' '*temp_rank*4+"This folder has subfolders: ["+'],['.join(dirs)+']')
         for d in dirs:
             listAllFiles(os.path.abspath(absFolder)+'/'+d, temp_rank+1)
 
 if __name__ == "__main__":
     import sys
-    #print(os.getcwd())
     args = len(sys.argv)
     if args == 1:
         currentAbsPath = os.path.dirname(os.path.abspath(__file__))
-        print('Processing the folder: '+currentAbsPath)
+        print('Start from the current folder: '+currentAbsPath)
         listAllFiles(currentAbsPath)
     elif args > 2:
         print('Error: too many arguments.')
