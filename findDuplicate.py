@@ -30,9 +30,9 @@ def listAllFiles(absFolder, temp_rank = 0):
     '''Process the folder recursively'''
     dirs = listfolder(absFolder)
     print(' '*temp_rank*4+"(Rank "+str(temp_rank)+"): " + absFolder)
+    filelist = listfiles(absFolder)
     if not dirs:       # means this is a bottom folder
         #print(' '*temp_rank*4+"This folder does not have any subfolders. ")
-        filelist = listfiles(absFolder)
         if not filelist:
             print(' '*temp_rank*4+"Empty folder here!")
         else:
@@ -42,15 +42,17 @@ def listAllFiles(absFolder, temp_rank = 0):
                 print(' '*temp_rank*4+'Duplicate Files: '+', '.join(listfiles(absFolder)))
                 global dup_list
                 dup_list.extend([absFolder+'/'+f for f in filelist])
-            print('')
+        print('')
         
     else:
-        print(' '*temp_rank*4+"This folder has files: " + ', '.join(listfiles(absFolder)))
-        files = findDuplicate(listfiles(absFolder))
-        if files:
-            print(' '*temp_rank*4+'Duplicate Files: '+', '.join(listfiles(absFolder)))
-            global dup_list
-            dup_list.extend([absFolder+'/'+f for f in filelist])
+        if not filelist:
+            print(' '*temp_rank*4+"Empty folder here!")
+        else:
+            print(' '*temp_rank*4+"This folder has files: " + ', '.join(filelist))
+            files = findDuplicate(filelist)
+            if files:
+                print(' '*temp_rank*4+'Duplicate Files: '+', '.join(filelist))
+                dup_list.extend([absFolder+'/'+f for f in filelist])
         print('')
 
         print(' '*temp_rank*4+"This folder has subfolders: ["+'],['.join(dirs)+']')
