@@ -1,0 +1,64 @@
+ # -*- coding: utf-8 -*-
+"""
+Created on Thu Aug  5 14:24:01 2021
+
+@author: Dahoo
+"""
+
+import os
+from collections import Counter
+
+def listfolder(absPath):
+    '''List all folders in one folder with an absolute path'''
+    dirs = [d for d in os.listdir(absPath) if os.path.isdir(absPath+'/'+d)]
+    return dirs
+    
+def listfiles(absPath):
+    '''List all files in one folder with an absolute path'''
+    files = [f for f in os.listdir(absPath) if os.path.isfile(absPath+'/'+f)]
+    return files
+    
+def findDuplicate(filelist):
+    '''Print duplicate File list'''
+    lower_list = [f.lower() for f in filelist]
+    duplicate_list = [item for item, count in Counter(lower_list).items() if count > 1]
+    print(duplicate_list)
+
+def listAllFiles(absFolder, temp_rank = 0):
+    dirs = listfolder(absFolder)
+    print(' '*temp_rank*4+"(rank "+str(temp_rank)+") The folder: " + absFolder)
+    if not dirs:       # means this is a bottom folder
+        print(' '*temp_rank*4+"This folder does not have any subfolders. ")
+        print(' '*temp_rank*4+"So the file list is: " + ', '.join(listfiles(absFolder))+'.')
+        print(' '*temp_rank*4, end='')
+        findDuplicate(listfiles(absFolder))
+    else:
+        print(' '*temp_rank*4+"This folder has files: " + ', '.join(listfiles(absFolder))+'.')
+        print(' '*temp_rank*4+"This folder has subfolders: ["+'],['.join(dirs)+'].')
+        for d in dirs:
+            listAllFiles(os.path.abspath(absFolder)+'/'+d, temp_rank+1)
+
+if __name__ == "__main__":
+    import sys
+    #print(os.getcwd())
+    args = len(sys.argv)
+    if args == 1:
+        currentAbsPath = os.path.dirname(os.path.abspath(__file__))
+        print('Processing the folder: '+currentAbsPath)
+        listAllFiles(currentAbsPath)
+    elif args > 2:
+        print('Error: too many arguments.')
+        print('Usage: '+sys.argv[0]+' [The relative/absolute path of a folder]')
+    else:
+        print('Current working directory is: '+os.getcwd())
+        print('Processing the folder: ' + sys.argv[1])
+        if os.path.isdir(sys.argv[1]):
+            listAllFiles(sys.argv[1])
+        else:
+            print('The folder does not exist!')
+
+
+#listAllFiles('C:/Users/Dahoo/Projects/test')
+#print(listfiles('.'))
+#print(listfolder('.'))
+#listfolder('C:\\Users\\Dahoo\\python\\xxx')
