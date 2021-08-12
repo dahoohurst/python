@@ -63,11 +63,14 @@ def listAllFiles(absFolder, temp_rank = 0):
 if __name__ == "__main__":
     import sys
     args = len(sys.argv)
+    fw = open("duplicatelist.txt", "w")
     if args == 1:
         currentAbsPath = os.path.dirname(os.path.abspath(__file__))
         print('Start from the current folder: '+currentAbsPath)
         listAllFiles(currentAbsPath)
         print('Duplicate file list is:\n'+'\n'.join(dup_list))
+        fw.write('The current folder: '+currentAbsPath+'\n')
+        fw.write(f+'\n' for f in dup_list)
     elif args > 2:
         print('Error: too many arguments.')
         print('Usage: '+sys.argv[0]+' [The relative/absolute path of a folder]')
@@ -79,4 +82,6 @@ if __name__ == "__main__":
         else:
             print('The folder does not exist!')
         print('Duplicate file list is:\n'+'\n'.join(dup_list))
-        
+        fw.write('The current folder: '+currentAbsPath+'\n')
+        fw.write(f+'\n' for f in dup_list)
+    fw.close()
