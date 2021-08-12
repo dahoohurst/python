@@ -30,11 +30,14 @@ def listAllFiles(absFolder, temp_rank = 0):
     print(' '*temp_rank*4+"(Rank "+str(temp_rank)+"): " + absFolder)
     if not dirs:       # means this is a bottom folder
         #print(' '*temp_rank*4+"This folder does not have any subfolders. ")
-        print(' '*temp_rank*4+"So the file list is: " + ', '.join(listfiles(absFolder)))
-        files = findDuplicate(listfiles(absFolder))
-        if files:
-            print(' '*temp_rank*4+'Duplicate Files: '+', '.join(listfiles(absFolder)))
+        filelist = listfiles(absFolder)
+        if not filelist:
+            print(' '*temp_rank*4+"Empty folder here!")
         else:
+            print(' '*temp_rank*4+"No subfolders here, so the file list is: " + ', '.join(filelist))
+            files = findDuplicate(filelist)
+            if files:
+                print(' '*temp_rank*4+'Duplicate Files: '+', '.join(listfiles(absFolder)))
             print('')
         
     else:
@@ -42,8 +45,7 @@ def listAllFiles(absFolder, temp_rank = 0):
         files = findDuplicate(listfiles(absFolder))
         if files:
             print(' '*temp_rank*4+'Duplicate Files: '+', '.join(listfiles(absFolder)))
-        else:
-            print('')
+        print('')
 
         print(' '*temp_rank*4+"This folder has subfolders: ["+'],['.join(dirs)+']')
         for d in dirs:
