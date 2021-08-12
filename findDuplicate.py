@@ -22,7 +22,7 @@ def findDuplicate(filelist):
     '''Print duplicate File list'''
     lower_list = [f.lower() for f in filelist]
     duplicate_list = [item for item, count in Counter(lower_list).items() if count > 1]
-    print(duplicate_list)
+    return duplicate_list
 
 def listAllFiles(absFolder, temp_rank = 0):
     '''Process the folder recursively'''
@@ -44,7 +44,7 @@ def listAllFiles(absFolder, temp_rank = 0):
             print(' '*temp_rank*4+'Duplicate Files: '+', '.join(listfiles(absFolder)))
         else:
             print('')
-            
+
         print(' '*temp_rank*4+"This folder has subfolders: ["+'],['.join(dirs)+']')
         for d in dirs:
             listAllFiles(os.path.abspath(absFolder)+'/'+d, temp_rank+1)
