@@ -40,9 +40,9 @@ def listAllFiles(absFolder, temp_rank = 0):
             print(' '*temp_rank*4+"No subfolders here, so the file list is: " + ', '.join(filelist))
             files = findDuplicate(filelist)
             if files:
-                print(' '*temp_rank*4+'Duplicate Files: '+', '.join(listfiles(absFolder)))
+                print(' '*temp_rank*4+'Duplicate Files: '+', '.join(files))
                 global dup_list
-                dup_list.extend([absFolder+'/'+f for f in filelist])
+                dup_list.extend([absFolder+'/'+f for f in files])
         print('')
         
     else:
@@ -52,8 +52,8 @@ def listAllFiles(absFolder, temp_rank = 0):
             print(' '*temp_rank*4+"This folder has files: " + ', '.join(filelist))
             files = findDuplicate(filelist)
             if files:
-                print(' '*temp_rank*4+'Duplicate Files: '+', '.join(filelist))
-                dup_list.extend([absFolder+'/'+f for f in filelist])
+                print(' '*temp_rank*4+'Duplicate Files: '+', '.join(files))
+                dup_list.extend([absFolder+'/'+f for f in files])
         print('')
 
         print(' '*temp_rank*4+"This folder has subfolders: ["+'],['.join(dirs)+']')
